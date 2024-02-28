@@ -13,7 +13,18 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      // "@/*": ["./*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@assets/*": ["src/_metronic/*"],
+      "@models/*": ["src/models/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
+      "@public/*": ["public/*"],
+      "@constant/*": ["src/constant/*"]
+    },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
