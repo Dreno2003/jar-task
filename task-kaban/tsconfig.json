@@ -18,12 +18,14 @@
       "@/*": ["src/*"],
       // "@/*": ["./*"],
       "@hooks/*": ["src/hooks/*"],
+      "@components/*": ["src/components/*"],
       "@assets/*": ["src/_metronic/*"],
       "@models/*": ["src/models/*"],
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
       "@public/*": ["public/*"],
-      "@constant/*": ["src/constant/*"]
+      "@constant/*": ["src/constant/*"],
+      "@context/*": ["src/context/*"]
     },
     /* Linting */
     "strict": true,

@@ -1,13 +1,18 @@
-import ThemeSwitcherMain from './common/components/theme-switcher/ThemeSwitcherMain'
+import { ThemeSwitcher } from '@components/theme-switcher/ThemeSwitcherMain'
+import { Outlet } from 'react-router-dom'
+import { ThemeProvider } from '@context/ThemeProvider'
 
 function App() {
 
   return (
     <>
-      <div className='bg:white dark:bg-black text-black dark:text-white'>
-        big man
-      </div>
-      <ThemeSwitcherMain />
+      <ThemeProvider >
+        <p>
+          <ThemeSwitcher />
+          kjbuj
+        </p>
+        <Outlet />
+      </ThemeProvider>
     </>
   )
 }
