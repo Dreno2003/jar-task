@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import firebase from "firebase/compat/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider ,  onAuthStateChanged, } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -18,6 +19,7 @@ const firebaseConfig = {
 //init. firebase auth.
 // init google auth provider
 
+//TODo presite auth
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -37,31 +39,11 @@ const signInUser = async () => {
       }
     }
 
-
-    // .then((result) => {
-    //   const credential: any = GoogleAuthProvider.credentialFromResult(result);
-    //   const token = credential.accessToken;
-    //   // The signed-in user info.
-    //   const user = result.user;
-
-    //   // IdP data available using getAdditionalUserInfo(result)
-    //   // ...
-    // })
-    // .catch((error) => {
-    //   // Handle Errors here.
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    //   // The email of the user's account used.
-    //   const email = error.customData.email;
-    //   // The AuthCredential type that was used.
-    //   const credential = GoogleAuthProvider.credentialFromError(error);
-    //   // ...
-    // });
     return authenticateUser;
   } catch (error) {
     throw new Error(`Error authenticating  user ${error}`);
   }
 };
 
-export { app, auth as firebaseGoogleAuth, signInUser };
+export { app, auth , firebase, signInUser , onAuthStateChanged};
 //todo set up authentication firebase services here and export it
