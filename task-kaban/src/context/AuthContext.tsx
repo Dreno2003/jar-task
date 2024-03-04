@@ -1,18 +1,17 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react'
-import { signInUser, firebase, onAuthStateChanged, auth } from '@/services/auth/firebase';
-import { UserType } from '@/types/types';
+import { signInUser, onAuthStateChanged, auth } from '@/services/auth/firebase';
 // create an authentication conext
 //create the context using the react createContext;
 // create the contextProvider that will be used around the app;
 // create the auth hook that will be used to access the context 
 
 interface AuthContextProps {
-    currentUser: any
-    isAuthenticated: boolean
     authUser: () => void
     // saveAuth: any
-    user:Record<string, unknown> | null
+    loading: boolean
+    user: Record<string, unknown> | null
     signOut?: any
+    profileUrl: string | null
 }
 
 //set the current user, 
@@ -20,41 +19,43 @@ interface AuthContextProps {
 const AuthContext = React.createContext<AuthContextProps | undefined>(undefined)
 
 export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [currentUser, setCurrentUser] = React.useState<any>()
-    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
     const [loading, setLoading] = React.useState(false)
+    const [profileUrl, setProfileUrl] = React.useState<string | null>('');
     const [user, setUser] = React.useState<any>()
 
 
     const authUser = async () => {
 
         try {
-            const res = await signInUser()
-            // console.log(res.user.getIdToken())
-            
-            setCurrentUser(res.user);
+             await signInUser();
+            setLoading(true);
+
+
         } catch (error) {
             console.log(error)
         }
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
+            setProfileUrl(user?.photoURL);
+
             setLoading(false);
         });
 
         return () => {
             unsubscribe();
         };
+
     }, []);
 
 
     const authValues: AuthContextProps = {
-        currentUser,
         authUser,
-        isAuthenticated,
         user,
+        loading,
+        profileUrl
         // signOut
     }
 

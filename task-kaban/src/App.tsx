@@ -8,6 +8,11 @@ function App() {
 
 
   const router = reactRouter.createBrowserRouter([
+   
+    {
+      path: '/auth',
+      element: <AuthPageMain />,
+    },
     {
       path: '/',
       element:
@@ -17,10 +22,6 @@ function App() {
 
 
     },
-    {
-      path: '/auth',
-      element: <AuthPageMain />,
-    }
   ])
   return (
     <>

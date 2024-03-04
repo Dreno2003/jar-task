@@ -5,15 +5,22 @@ import { useAuth } from '@/context/AuthContext';
 import * as useRouting from 'react-router-dom'
 import React from 'react';
 
+
 function AuthPageMain() {
-    const auth = useAuth();
+    const auths = useAuth();
     const navigate = useRouting.useNavigate();
 
+ 
+
     React.useEffect(() => {
-        if (auth?.user) {
-          navigate('/', { replace: true });
+
+        if (auths?.user) {
+            navigate('/', );
         }
-      }, [auth, navigate]);
+    }, [auths?.user]);
+
+   
+
 
     return (
         <div className='flex bg-background justify-center items-center h-screen text-center' >
@@ -31,7 +38,7 @@ function AuthPageMain() {
                     Organise your task with ease
                 </p>
 
-                <Button size='lg' variant='outline' className=' mt-4 font-medium' onClick={auth?.authUser}>
+                <Button size='lg' variant='outline' className=' mt-4 font-medium' onClick={auths?.authUser}>
                     <FcGoogle className='mr-4 text-xl' />
                     Sign In With Gooogle
                 </Button>

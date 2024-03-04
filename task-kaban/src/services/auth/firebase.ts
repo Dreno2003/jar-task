@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import firebase from "firebase/compat/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider ,  onAuthStateChanged, } from "firebase/auth";
+import { signOut, getAuth, signInWithPopup, GoogleAuthProvider, browserLocalPersistence, browserSessionPersistence, setPersistence, onAuthStateChanged, } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -25,8 +25,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+
+
 const signInUser = async () => {
+
   try {
+     await setPersistence(auth, browserLocalPersistence);
     const authenticateUser = await signInWithPopup(auth, provider);
 
     if (authenticateUser) {
@@ -45,5 +49,19 @@ const signInUser = async () => {
   }
 };
 
-export { app, auth , firebase, signInUser , onAuthStateChanged};
+
+
+
+
+const signOutUser = async () => {
+  try {
+    const signoutuser = await signOut(auth);
+    return signoutuser;
+
+  } catch (error) {
+    throw new Error('Errro signing user out');
+  }
+}
+
+export { app, auth, firebase, signInUser, onAuthStateChanged, signOutUser };
 //todo set up authentication firebase services here and export it
