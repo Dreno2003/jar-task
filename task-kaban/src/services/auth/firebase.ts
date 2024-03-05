@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, } from "firebase/app";
 import firebase from "firebase/compat/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection, addDoc } from "firebase/firestore";
 
-import { signOut, getAuth, signInWithPopup, GoogleAuthProvider, browserLocalPersistence,  setPersistence, onAuthStateChanged, signInWithRedirect, } from "firebase/auth";
+import { signOut, getAuth, signInWithPopup, GoogleAuthProvider, browserLocalPersistence, setPersistence, onAuthStateChanged, signInWithRedirect, } from "firebase/auth";
+import { todotype } from "@/types/types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -26,7 +27,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-
+const db = getFirestore(app); // init firestore
 
 
 const signInUser = async () => {
@@ -53,8 +54,6 @@ const signInUser = async () => {
 
 
 
-
-
 const signOutUser = async () => {
   try {
     const signoutuser = await signOut(auth);
@@ -75,5 +74,28 @@ const switchUserAccount = async () => {
 }
 
 
-export { app, auth, firebase, signInUser, onAuthStateChanged, signOutUser, switchUserAccount };
+
+const addDataToFirestore = async ({todos, completed}:todotype) => {
+  try {
+    const docRef = await addDoc(collection(db, "todos"), {
+      todos: todos,
+      completed: completed
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+
+export {
+  app,
+  auth,
+  firebase,
+  signInUser,
+  onAuthStateChanged,
+  signOutUser,
+  switchUserAccount,
+  addDataToFirestore
+};
 //todo set up authentication firebase services here and export it

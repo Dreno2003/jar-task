@@ -15,7 +15,7 @@ const TaskCard = () => {
     const [tasks, setTasks] = React.useState<ReactNode[]>([]);
 
     const handleAddTask = () => {
-        setTasks([<TaskInput />, ...tasks]);
+        setTasks([...tasks, <TaskInput />, ]);
     };
 
     return (
