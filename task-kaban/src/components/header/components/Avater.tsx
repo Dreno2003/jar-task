@@ -70,14 +70,14 @@ interface AvatarInitialProps extends React.HTMLProps<HTMLDivElement> {
 const AvaterMain: React.FC<AvatarInitialProps> = ({ userNameInitials, imageSrc, fullName }) => {
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu >
         <DropdownMenuTrigger>
-          <Avatar>
+          <Avatar className="size-9">
             <AvatarImage src={imageSrc} />
             <AvatarFallback>{userNameInitials}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="text-left">
+        <DropdownMenuContent  className="text-left">
           <DropdownMenuLabel>
             {/* user full name */}
             {fullName}
