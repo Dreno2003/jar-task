@@ -11,7 +11,8 @@ interface AuthContextProps {
     loading: boolean
     user: Record<string, unknown> | null
     signOut?: any
-    profileUrl: string | null
+    profileUrl: string | null,
+    fullName: any
 }
 
 //set the current user, 
@@ -21,13 +22,14 @@ const AuthContext = React.createContext<AuthContextProps | undefined>(undefined)
 export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [loading, setLoading] = React.useState(false)
     const [profileUrl, setProfileUrl] = React.useState<string | null>('');
+    const [fullName, setFullName] = React.useState()
     const [user, setUser] = React.useState<any>()
 
 
     const authUser = async () => {
 
         try {
-             await signInUser();
+            await signInUser();
             setLoading(true);
 
 
@@ -40,7 +42,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
             setProfileUrl(user?.photoURL);
-
+            setFullName(user?.displayName )
             setLoading(false);
         });
 
@@ -55,7 +57,8 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
         authUser,
         user,
         loading,
-        profileUrl
+        profileUrl,
+        fullName
         // signOut
     }
 

@@ -10,8 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@components/dropdown-menu/DropDownMenuMain'
+import { TbLogout } from "react-icons/tb";
+import { signOutUser } from "@/services/auth/firebase";
+
 
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/button/button"
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -61,8 +65,9 @@ interface AvatarInitialProps extends React.HTMLProps<HTMLDivElement> {
    */
   imageSrc?: any
   userNameInitials?: string
+  fullName: any
 }
-const AvaterMain: React.FC<AvatarInitialProps> = ({ userNameInitials, imageSrc }) => {
+const AvaterMain: React.FC<AvatarInitialProps> = ({ userNameInitials, imageSrc, fullName }) => {
   return (
     <>
       <DropdownMenu>
@@ -72,13 +77,24 @@ const AvaterMain: React.FC<AvatarInitialProps> = ({ userNameInitials, imageSrc }
             <AvatarFallback>{userNameInitials}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuContent className="text-left">
+          <DropdownMenuLabel>
+            {/* user full name */}
+            {fullName}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+
+          <DropdownMenuItem className="hidden">
+            {/* switche acct.btn */}
+          </DropdownMenuItem>
+
+          <DropdownMenuItem >
+            {/* log out btn */}
+            <Button variant='plain' className="!bg-transperent" onClick={signOutUser}>
+              <TbLogout size={23} className="mr-2" />  Sign out
+            </Button>
+          </DropdownMenuItem>
+
         </DropdownMenuContent>
       </DropdownMenu>
 
