@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import firebase from "firebase/compat/app";
-import { signOut, getAuth, signInWithPopup, GoogleAuthProvider, browserLocalPersistence, browserSessionPersistence, setPersistence, onAuthStateChanged, } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+import { signOut, getAuth, signInWithPopup, GoogleAuthProvider, browserLocalPersistence,  setPersistence, onAuthStateChanged, signInWithRedirect, } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -30,7 +32,7 @@ const provider = new GoogleAuthProvider();
 const signInUser = async () => {
 
   try {
-     await setPersistence(auth, browserLocalPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     const authenticateUser = await signInWithPopup(auth, provider);
 
     if (authenticateUser) {
@@ -63,5 +65,15 @@ const signOutUser = async () => {
   }
 }
 
-export { app, auth, firebase, signInUser, onAuthStateChanged, signOutUser };
+
+//user switching account 
+const switchUserAccount = async () => {
+
+  const googleAuthProvider = provider;
+  signInWithRedirect(auth, googleAuthProvider);
+
+}
+
+
+export { app, auth, firebase, signInUser, onAuthStateChanged, signOutUser, switchUserAccount };
 //todo set up authentication firebase services here and export it

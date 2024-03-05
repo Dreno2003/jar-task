@@ -12,10 +12,12 @@ import {
 } from '@components/dropdown-menu/DropDownMenuMain'
 import { TbLogout } from "react-icons/tb";
 import { signOutUser } from "@/services/auth/firebase";
+import { PiUserSwitch } from "react-icons/pi";
+import { switchUserAccount } from '@/services/auth/firebase'
+
 
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/button/button"
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -77,22 +79,26 @@ const AvaterMain: React.FC<AvatarInitialProps> = ({ userNameInitials, imageSrc, 
             <AvatarFallback>{userNameInitials}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent  className="text-left">
+        <DropdownMenuContent align="end" className="text-left">
           <DropdownMenuLabel>
             {/* user full name */}
             {fullName}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="hidden">
+          <DropdownMenuItem onClick={switchUserAccount} >
             {/* switche acct.btn */}
+            <div className="!bg-transperent flex" onClick={signOutUser}>
+              <PiUserSwitch size={22} className="mr-2" />  <span className="font-thin"> Switch Account
+              </span>
+            </div>
           </DropdownMenuItem>
 
           <DropdownMenuItem >
             {/* log out btn */}
-            <Button variant='plain' className="!bg-transperent" onClick={signOutUser}>
-              <TbLogout size={23} className="mr-2" />  Sign out
-            </Button>
+            <div className="!bg-transperent flex" onClick={signOutUser}>
+              <TbLogout size={22} className="mr-2 " />  <span className="font-thin"> Sign out</span>
+            </div>
           </DropdownMenuItem>
 
         </DropdownMenuContent>

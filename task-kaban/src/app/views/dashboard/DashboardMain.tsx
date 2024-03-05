@@ -1,15 +1,15 @@
 import HeaderMain from '@/components/header/HeaderMain';
-import { signOutUser } from '@/services/auth/firebase'
+import Dashboard from './Dashboard';
 
 function DashboardMain() {
-  const handleSignOut = async () => {
-    const signout = await signOutUser()
-    return signout;
-  }
+
   return (
     <>
       <HeaderMain />
-      {/* <button onClick={handleSignOut}>Sign out</button> */}
+
+      <main className='container my-4'>
+        <Dashboard />
+      </main>
     </>
   )
 }
