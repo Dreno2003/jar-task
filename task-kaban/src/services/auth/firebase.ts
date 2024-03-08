@@ -1,13 +1,29 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, } from "firebase/app";
 import firebase from "firebase/compat/app";
-import { getFirestore, doc, setDoc, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  updateDoc,
+  collection,
+  addDoc,
+  getDoc,
+  onSnapshot,
+  doc,
+} from "firebase/firestore";
 
-import { signOut, getAuth, signInWithPopup, GoogleAuthProvider, browserLocalPersistence, setPersistence, onAuthStateChanged, signInWithRedirect, } from "firebase/auth";
+import {
+  signOut,
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  browserLocalPersistence,
+  setPersistence,
+  onAuthStateChanged,
+  signInWithRedirect,
+} from "firebase/auth";
+
 import { todotype } from "@/types/types";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Your web app's Firebase configuration
+
 
 const firebaseConfig = {
   apiKey: process.env.VITE_APP_FIREBASE_API_KEY,
@@ -18,16 +34,14 @@ const firebaseConfig = {
   appId: process.env.VITE_APP_FIREBASE_APP_ID,
   measurementId: process.env.VITE_APP_FIREBASE_API_KEY_MEASUREMENT_ID,
 };
-// Initialize Firebase
-//init. firebase auth.
-// init google auth provider
 
-//TODo presite auth
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app); // init firestore
+const collectionRef = collection(db, 'todos')
+
 
 
 const signInUser = async () => {
@@ -75,7 +89,7 @@ const switchUserAccount = async () => {
 
 
 
-const addDataToFirestore = async ({todos, completed}:todotype) => {
+const addDataToFirestore = async ({ todos, completed }: todotype) => {
   try {
     const docRef = await addDoc(collection(db, "todos"), {
       todos: todos,
@@ -88,6 +102,44 @@ const addDataToFirestore = async ({todos, completed}:todotype) => {
 };
 
 
+
+async function getData() {
+  return new Promise((resolve) => {
+    onSnapshot(collectionRef, (snapshot) => {
+      let todos: any = [];
+      snapshot.docs.forEach((doc) => {
+        let data = doc.data();
+        // todos.push({ ...data,  });
+        todos.push({ ...data, id: doc.id });
+      });
+      resolve(todos);
+    });
+  });
+}
+
+
+
+// Update a specific document
+// const updateTodo = (todoId, updatedData) => {
+
+//   collectionRef
+//     .doc(todoId)
+//     .update(updatedData)
+//     .then(() => {
+//       console.log('Document successfully updated!');
+//     })
+//     .catch((error) => {
+//       console.error('Error updating document: ', error);
+//     });
+// };
+
+
+const upDateTodo = async ( todoId, updatedFields ) => {
+  const todoRef = doc(db, "todos", todoId);
+  await updateDoc(todoRef, updatedFields);
+  // Handle success or error (optional)
+};
+
 export {
   app,
   auth,
@@ -96,6 +148,10 @@ export {
   onAuthStateChanged,
   signOutUser,
   switchUserAccount,
-  addDataToFirestore
+  addDataToFirestore,
+  getData,
+  upDateTodo
 };
+
+
 //todo set up authentication firebase services here and export it

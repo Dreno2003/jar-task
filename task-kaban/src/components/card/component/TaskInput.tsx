@@ -2,20 +2,20 @@ import { Input } from '@/components/input/Input'
 import React from 'react';
 import { addDataToFirestore } from '@/services/auth/firebase';
 import { todotype } from '@/types/types';
-import { Button } from '@/components/button/button';
 
 function TaskInput() {
     const [isCompleted, setIsCompleted] = React.useState(false);
     const [task, setTask] = React.useState<string>('');
-    // const [todo, setTodos] = React.useState<todotype[]>([])
 
+
+   
 
     function handleSubmit() {
         // e.preventDefault();
 
         if (task === '') return;
         let newTodo: todotype = {
-            todos: task,
+            todos: task  ,
             completed: isCompleted,
         };
         addDataToFirestore(newTodo)
@@ -33,6 +33,7 @@ function TaskInput() {
         }
     }, [isCompleted])
 
+    
 
     return (
         <>
@@ -43,7 +44,9 @@ function TaskInput() {
 
                     onChange={() => setIsCompleted(!isCompleted)}
                     className='size-4 ' />
-                <Input type='text' onBlur={handleSubmit} onChange={handleTaskInput} className='!border-none focus-visible:ring-0 text-slate-400 transition-all' />
+                <Input type='text' value={ task } onBlur={handleSubmit} onChange={handleTaskInput} className='!border-none focus-visible:ring-0 text-slate-400 transition-all' />
+          
+
             </div>
         </>
     )

@@ -7,5 +7,6 @@ export interface UserType {
 export interface todotype {
     todos: string;
     completed?: boolean;
+    id?:number | any
     // Add other fields with their types
   }
