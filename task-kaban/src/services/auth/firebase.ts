@@ -43,7 +43,6 @@ const db = getFirestore(app); // init firestore
 const collectionRef = collection(db, 'todos')
 
 
-
 const signInUser = async () => {
 
   try {
